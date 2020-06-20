@@ -1,73 +1,61 @@
 //creates a variable to store current date
 var now = moment().format("dddd, MMMM Do, YYYY");
 
-var updateHour = function() {
-  $('time-block').each(function(hour) {
-    var blockHour = hour.id.split('-')[1]
-    console.log(blockHour)
-    if (blockHour < currentHour) {
-      hour.addClass('past')
-    } else if (blockHour === currentHour) {
-     hour.removeClass('past')
-     hour.addClass('present')
-    } else {
-      hour.removeClass('past')
-      hour.removeClass('present')
-      hour.addClass('future')
-    };
-  })
-  };
+//creates a variable to store current hour
+var currentHour = moment().format("HH");
 
-//adds current day to the page
+//appends current date to page
 $("#currentDay").append("<p class='body'>" + now + "</p>");
 
-//on click of text field
-$(".hour-group").on("click", "textarea", function(){
-    console.log("Clicked on where the text area should go")
-    
-  
-  });
+// updates the text area classes when called
+var updateHour = function() {
+  $('.time-block').each(function() {
+    var scheduleHour = $(this).attr("id").split('-')[1]
+    if (scheduleHour < currentHour) {
+      $(this).removeClass('future')
+      $(this).removeClass('present')
+      $(this).addClass('past')
+    } else if (scheduleHour === currentHour) {
+      $(this).removeClass('past')
+      $(this).removeClass('future')
+      $(this).addClass('present')
+    } else {
+      $(this).removeClass('past')
+      $(this).removeClass('present')
+      $(this).addClass('future')
+    };
+  })
+};
 
-  // $(".hour-group").on("blur", "textarea", function(){
-  //     console.log("this has been blurred")
- 
-      
-  // });
+// when page is called text isput back into the text field if in local storage
+var reloadPage = function() {
+  for (var i = 09; i<= 17; i++) {
+    // beacuse of military time (in id) it was not reloading 9 so created a conditional to get that to load
+    if (i === 9) {
+      $(`#hour-09 .description`).val(localStorage.getItem(`hour-09`))
+    } 
+    //updates all other text fields
+    else {
+    $(`#hour-${i} .description`).val(localStorage.getItem(`hour-${i}`))
+    }
+    updateHour();
+  };
+};
+
+
 //save button functionality
 $(".saveBtn").on("click", function() {
-  var currentButton = $(this)[0];
-  console.log(currentButton);
-
-    var value = $(this)
-    .siblings('.description')
-    .val();
-
     var time = $(this)
       .parent()
       .attr("id");
 
+    var value = $(this)
+      .siblings('.description')
+      .val();
+
     localStorage.setItem(time, value)
+    updateHour();
   });
 
+ reloadPage();
  
-    
-  // });
-
-  //need jquery to test every time to see if the current time is past the time we currently on?
-    // data ids? data-hour = #?
-
-
-  // This all goes together.  
-    //$(document).ready(function(){
-      //Need to get current time using moment but only hours
-        //for loop 
-        //split at dash 
-          //array of times at grabbing at index 1 because index 0 is hour
-      //$("#time-block") if {check for time past} else if {check for time now} else {future}
-   // }) 
-
-
-  // on the .ready function it needs to check localStorage to 
-  for (var i = 9; i<= 17; i++) {
-    $(`#hour-${i} .description`).val(localStorage.getItem(`hour- ${i}`))
-  }
