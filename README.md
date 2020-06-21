@@ -11,7 +11,7 @@
 
 ## Screenshot of Application
 
-![Work Day Planner](assets\images\word-day.PNG)
+![Work Day Planner](\assets\images\word-day.PNG)
 
 ## Contributers 
     -Joshua Weisbrod-Torres

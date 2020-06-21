@@ -7,6 +7,14 @@ var currentHour = moment().format("HH");
 //appends current date to page
 $("#currentDay").append("<p class='body'>" + now + "</p>");
 
+//updates the color on the page every 5 minutes
+setInterval(function() {
+  $(".description").each(function (el) {
+    updateHour(el);
+  });
+}, (1000 * 60) * 5);
+
+
 // updates the text area classes when called
 var updateHour = function() {
   $('.time-block').each(function() {
