@@ -9,8 +9,8 @@ $("#currentDay").append("<p class='body'>" + now + "</p>");
 
 //updates the color on the page every 5 minutes
 setInterval(function() {
-  $(".description").each(function (el) {
-    updateHour(el);
+  $(".description").each(function (colors) {
+    updateHour(colors);
   });
 }, (1000 * 60) * 5);
 
